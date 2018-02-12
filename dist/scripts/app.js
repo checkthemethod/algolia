@@ -19,12 +19,15 @@ var indexMaster = client.initIndex(indexName);
 var $facetsFood = $('#facet-list-food-type');
 var $facetsPayment = $('#facet-list-payment');
 var $facetsRating = $('#facet-list-rating');
-var $searchBox = $('.search-box');
+var $searchBox = $('#search-box');
 var $moreBtn = $('.more-btn');
 var $filterBtn = $('.filter-btn');
-var $resultsSection = $('aside, section');
+var $resultsSection = $('.results');
+var $resultsComponents = $('aside, section');
 var $fetchBtn = $('#fetch-hits-btn');
-var $closeBtn = $('#fetch-hits-btn');
+var $closeBtn = $('.close-btn');
+var $clearBtn = $('.clear-btn');
+var $topBtn = $('.top-btn');
 var $numResults = $('.num-results');
 var $processingTime = $('.num-time');
 var $window = $(window);
@@ -65,7 +68,7 @@ retrieveBrowserLocation();
 
 // Algolia listener
 algoliaHelper.on('result', function(content) {
-	$resultsSection.removeClass('hidden');
+	$resultsComponents.removeClass('hidden');
 	$loadingScreen.addClass('hidden');
 	fetching = false;
 
@@ -89,21 +92,32 @@ algoliaHelper.on('result', function(content) {
 $window.on('scroll', onHandleScroll);
 $fetchBtn.on('click', onFetchHits);
 
+$clearBtn.on('click', function() {
+	$('fieldset input').prop('checked', false);
+	algoliaHelper.clearRefinements('stars_count');
+	algoliaHelper.setQueryParameter('hitsPerPage', 20).search();
+	$(this).addClass('hidden');
+});
+
+$topBtn.on('click', function(e) {
+	e.preventDefault();
+
+});
+
 $searchBox.on('keyup', function() {
-	//console.log($(this).val());
   algoliaHelper.setQuery($(this).val())
         .search();
 });
 
 $filterBtn.on('click', function(e) {
 	e.preventDefault();
-	$resultsSection.addClass('slide-in');
+	$resultsComponents.addClass('slide-in');
 
 });
 
 $closeBtn.on('click', function(e) {
 	e.preventDefault();
-	$resultsSection.removeClass('slide-in')
+	$resultsComponents.removeClass('slide-in')
 
 });
 
@@ -123,15 +137,20 @@ function onHandleScroll() {
 	// if the scroll is more than 90% from the top, load more content.
 	if(scrollPercentage > 0.04) {
 		$header.addClass('fixed');
+		$topBtn.addClass('hidden');
+		$resultsSection.addClass('fixed-offset')
 	} else {
 		$header.removeClass('fixed');
+		$topBtn.removeClass('hidden');
+		$resultsSection.removeClass('fixed-offset')
 	}
 	if(scrollPercentage > 0.999999 && $fetchBtn.is(':visible')) {
+		
 		// Load content
 		if(!fetching) {
 			fetchMoreContent();
 		}
-	}
+	} 
 }
 
 function onFetchHits(e) {
@@ -155,6 +174,7 @@ function initFilters($facets, category) {
 function initRatings() {
 	$facetsRating.on('click', 'input[type=radio]', function(e) {
 			var facetValue = $(this).val();
+			$clearBtn.removeClass('hidden');
 			//clear rating refinements
 			algoliaHelper.clearRefinements('stars_count');
 
