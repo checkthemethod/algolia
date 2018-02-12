@@ -13,7 +13,7 @@ aside {
 
 
 body {
-    background: url(images/repeatable.png) #e6e6e6;
+    background: url(../images/background.png) #e6e6e6;
     font-family: 'Open Sans', 'Arial', sans-serif;
     padding: 60px;
 }
@@ -316,7 +316,7 @@ h3.left-aligned::before {
     cursor: pointer;
     width: 16px;
     height: 16px;
-    background-image: url(images/star-empty.png);
+    background-image: url(../images/star-empty.png);
     background-size: cover;
     float: right;
 }
@@ -326,7 +326,7 @@ h3.left-aligned::before {
 .rating>input:checked~label,
 .rating:not(:checked)>label:hover,
 .rating:not(:checked)>label:hover~label {
-    background-image: url(images/stars-plain.png);
+    background-image: url(../images/stars-plain.png);
     background-size: cover;
 }
 
@@ -343,7 +343,7 @@ h3.left-aligned::before {
 /* lighten current selection */
 
 .rating>input:checked~label:hover~label {
-    background-image: url(images/stars-plain.png);
+    background-image: url(../images/stars-plain.png);
     background-size: cover;
 }
 
@@ -351,13 +351,13 @@ h3.left-aligned::before {
 /* static rating display */
 
 .star-default {
-    background: url(images/stars-icons.png);
+    background: url(../images/stars-icons.png);
     position: relative;
     margin: 0 10px;
 }
 
 .star-highlight {
-    background: url(images/stars-icons.png);
+    background: url(../images/stars-icons.png);
     background-position: 0 -17px;
     position: absolute;
 }
