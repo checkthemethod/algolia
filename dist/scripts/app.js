@@ -265,9 +265,7 @@ function renderFacetList(content) {
 				var facetValueClass = facet.isRefined ? 'refined'  : '';
 				var label = aTag.html(facet.name + '<span class="count pull-right">' + facet.count + '</span>');
 				return $('<li class="'+ facetValueClass +'" >').append(label);
-
 			}
-
 		});
 	});
 }
