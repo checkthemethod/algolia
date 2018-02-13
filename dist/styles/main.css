@@ -531,4 +531,8 @@ header.fixed {
         left: 0%;
         display: block;
     }
+
+    .btn-footer{
+        display: block !important;
+    }
 }

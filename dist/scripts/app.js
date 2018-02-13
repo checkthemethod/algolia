@@ -27,7 +27,7 @@ var $resultsComponents = $('aside, section');
 var $fetchBtn = $('#fetch-hits-btn');
 var $closeBtn = $('.close-btn');
 var $clearBtn = $('.clear-btn');
-var $topBtn = $('.top-btn');
+var $topBtn = $('#top-btn');
 var $numResults = $('.num-results');
 var $processingTime = $('.num-time');
 var $window = $(window);
@@ -102,6 +102,10 @@ $clearBtn.on('click', function() {
 $topBtn.on('click', function(e) {
 	e.preventDefault();
 
+    $('html, body, #main').animate({ scrollTop: 0 }, 'slow');
+    return false; 
+
+
 });
 
 $searchBox.on('keyup', function() {
@@ -137,11 +141,11 @@ function onHandleScroll() {
 	// if the scroll is more than 90% from the top, load more content.
 	if(scrollPercentage > 0.04) {
 		$header.addClass('fixed');
-		$topBtn.addClass('hidden');
+		$topBtn.removeClass('hidden');
 		$resultsSection.addClass('fixed-offset')
 	} else {
 		$header.removeClass('fixed');
-		$topBtn.removeClass('hidden');
+		$topBtn.addClass('hidden');
 		$resultsSection.removeClass('fixed-offset')
 	}
 	if(scrollPercentage > 0.999999 && $fetchBtn.is(':visible')) {
